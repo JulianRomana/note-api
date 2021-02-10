@@ -18,9 +18,11 @@ router.post('/', async (req, res) => {
 
   db.query(query, [[email, username, hashedPassword]], err => {
     if (err) {
-      res.json({ status: 500, message: err }) 
+      res.json({ status: 500, message: err })
       console.error(err)
+      return
     }
+
     res.json({
       status: 201, 
       message: "User created",

@@ -27,5 +27,3 @@ app.use('/user', userRouter)
 
 
 app.listen(PORT, () => console.log(`Server started, listening port: http://localhost:${PORT}`))
-
-

@@ -1,5 +1,6 @@
 const mysql = require('mysql')
 const express = require('express')
+const authMiddleware = require('../middlewares/auth')
 const router = express.Router()
 
 const { parsed: env } = require('dotenv').config()
@@ -23,7 +24,7 @@ router.post('/', (req, res) => {
   })
 })
 
-router.get('/', (req, res) => {
+router.get('/', authMiddleware, (req, res) => {
   const sql = `SELECT * FROM Note`
   db.query(sql, (err, data,) => {
     if (err) res.json({ status: 500, message: err })
