@@ -2,6 +2,7 @@ const mysql = require('mysql')
 const express = require('express')
 const authMiddleware = require('../middlewares/auth')
 const router = express.Router()
+router.use(authMiddleware)
 
 const { parsed: env } = require('dotenv').config()
 const { HOST: host, PASSWORD: password, USER: user, DATABASE: database } = env
@@ -24,7 +25,7 @@ router.post('/', (req, res) => {
   })
 })
 
-router.get('/', authMiddleware, (req, res) => {
+router.get('/', (req, res) => {
   const sql = `SELECT * FROM Note`
   db.query(sql, (err, data,) => {
     if (err) res.json({ status: 500, message: err })
@@ -43,6 +44,7 @@ router.delete('/:id', (req, res) => {
   db.query(sql, id,(err, data) => {
     if (err) res.json({ status: 500, message: err })
     res.json({
+      id: Number(id),
       status: 200,
       message: "Note successfully deleted"
     })

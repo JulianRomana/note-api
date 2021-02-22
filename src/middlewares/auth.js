@@ -7,10 +7,10 @@ const isUserAuthenticated = async (req, res, next) => {
   const [_, token] = authorization.split(' ')
   if (token === 'null') return res.json({ status: 401, message: 'Requires login!' })
 
-  const isValid = jwt.verify(token, TOKEN_SECRET).catch(() => false)
-  console.log(isValid)
-    /* .then(() => { next() })
-    .catch(err => res.json({ status: 401, message: 'Token invalid!' })) */
+  const isValid = jwt.verify(token, TOKEN_SECRET, (err, decoded) => (err && false) ?? true )
+  if(!isValid) return res.json({ status: 401, message: 'Token invalid!' })
+
+  next()
 }
 
-module.exports = isUserAuthenticated  
+module.exports = isUserAuthenticated
