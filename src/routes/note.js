@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
   ]
 
   db.query(query, [values], err => {
-    if (err) res.json({ status: 500, message: err }) 
+    if (err) res.status(500).json({ status: 500, message: err }) 
     res.json({
       status: 201,
       message: "New note added"
@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
   const sql = `SELECT * FROM Note`
   db.query(sql, (err, data,) => {
-    if (err) res.json({ status: 500, message: err })
+    if (err) res.status(500).json({ status: 500, message: err })
     res.json({
       status: 200,
       data,
@@ -42,7 +42,7 @@ router.delete('/:id', (req, res) => {
   const { id } = req.params
 
   db.query(sql, id,(err, data) => {
-    if (err) res.json({ status: 500, message: err })
+    if (err) res.status(500).json({ status: 500, message: err })
     res.json({
       id: Number(id),
       status: 200,
@@ -60,7 +60,7 @@ router.put('/:id', (req, res) => {
   const { id } = req.params
 
   db.query(sql, [...values, id],(err, data) => { 
-    if (err) res.json({ status: 500, message: err })
+    if (err) res.status(500).json({ status: 500, message: err })
     res.json({
       status: 200,
       data,
